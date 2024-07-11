@@ -1,7 +1,10 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { RolesGuard } from './roles.guard';
-import { Roles } from './roles.decorator';
+
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // تعديل المسار
+import { RolesGuard } from '../roles/roles.guard'; // تعديل المسار
+import { Roles } from '../auth/roles.decorator'; // تعديل المسار
+
 
 @Controller('users')
 export class UsersController {
