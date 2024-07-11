@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Task } from './task.entity';
 import { User } from '../users/user.entity';
+import { FindOneOptions } from 'typeorm';
+
 
 @Injectable()
 export class TasksService {
@@ -19,7 +21,10 @@ export class TasksService {
   }
 
   findOne(id: number): Promise<Task> {
-    return this.tasksRepository.findOne(id);
+      const options: FindOneOptions<Task> = {
+    where: { id },
+  };
+  return this.tasksRepository.findOne(options);
   }
 
   create(task: Partial<Task>, user: User): Promise<Task> {

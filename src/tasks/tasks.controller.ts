@@ -2,7 +2,7 @@ import { Controller, Get, Post, Param, Body, Put, Delete, Query, UseGuards } fro
 import { TasksService } from './tasks.service';
 import { Task } from './task.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { RolesGuard } from '../auth/roles.guard';
+import { RolesGuard } from '../roles/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { User } from '../users/user.entity';
 
