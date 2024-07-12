@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Patch, Body, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './user.entity';
+iimport { User, UserDocument  } from './user.entity';
 import { Task } from '../tasks/task.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';

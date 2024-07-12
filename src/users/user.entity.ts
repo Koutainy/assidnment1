@@ -1,13 +1,15 @@
 // user.entity.ts
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {  Prop, Schema, SchemaFactory, OneToMany } from '@nestjs/mongoose';
 import { Task } from '../tasks/task.entity';
+import { Document } from 'mongoose';
 
-@Entity()
-export class User {
-  @PrimaryGeneratedColumn()
+
+export type UserDocument = User & Document;
+@Schema()
+ export class User {
   id: ObjectID;
 
-  @Column()
+   @Prop({ required: true })
   username: string;
 
   @Column()
@@ -16,9 +18,14 @@ export class User {
    @Column()
   email: string;
 
-  @Column()
-  roles: string;
+   @Prop({ required: true })
+  password: string;
+
+  @Prop({ required: true, enum: ['admin', 'user'], default: 'user' })
+  role: string;
+
 
   @OneToMany(() => Task, (task) => task.user)
   tasks: Task[];
 }
+export const UserSchema = SchemaFactory.createForClass(User);

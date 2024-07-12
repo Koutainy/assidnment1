@@ -1,23 +1,22 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { TasksModule } from './tasks/tasks.module';
 import { UsersModule } from './users/users.module';
-import { User } from './users/user.entity';
+import { User, UserDocument  } from './user.entity';
 import { Task } from './tasks/task.entity';
 import { ConfigEnvironmentModule } from './config/config.module';
 import { EmailModule } from './mail/email.module';
 import { LoggerModule } from './logger/logger.module'; // إضافة وحدة التسجيل
-import { ErrorMiddleware } from '.middleware/error.middleware'; 
+import { ErrorMiddleware } from './middleware/error.middleware';
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston'; 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: process.env.DATABASE_URL,
-      synchronize: true,
+     MongooseModule.forRoot('mongodb://localhost:27017/nestjs-app'),
+         useNewUrlParser: true,
       useUnifiedTopology: true,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    }),
     TasksModule,
     UsersModule,
     ConfigEnvironmentModule,

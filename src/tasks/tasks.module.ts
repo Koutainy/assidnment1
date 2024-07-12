@@ -4,8 +4,9 @@ import { TasksService } from './tasks.service';
 import { TasksController } from './tasks.controller';
 import { Task } from './task.entity';
 import { EmailModule } from '../mail/email.module';
+import * as mongoose from 'mongoose';
 @Module({
-  imports: [TypeOrmModule.forFeature([Task]), EmailModule],
+  MongooseModule.forFeature([{ name: 'Task', schema: TaskSchema }]),
   providers: [TasksService],
   controllers: [TasksController]
 })

@@ -1,6 +1,6 @@
 // task.entity.ts
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { User } from '../users/user.entity';
+import { User, UserDocument  } from './users/user.entity';
 
 @Entity()
 export class Task {
