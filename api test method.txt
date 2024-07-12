@@ -1,0 +1,67 @@
+login/ auth
+1. reqest method (post)
+2. url test local 
+localhost:3000/auth/login
+3. body -> raw -> json 
+4. {
+  "username": "testuser",
+  "password": "testpass"
+}
+*************************
+Use JWT token to access protected paths
+ .. Access a protected path for all users
+1. reqest method (GET)
+2. url test local 
+localhost:3000//users/profile
+In the "Authorization" tab, choose "Bearer Token" and place the JWT code you got in the previous step.
+Press "Send".
+ You should receive a response with user file informatio
+..Access a protected path for administrators only
+1. reqest method (GET)
+2. url test local 
+localhost:3000/users/admin
+
+In the "Authorization" tab, choose "Bearer Token" and place the JWT code you got in the previous step.
+Press "Send". 
+If the user has a role, you should receive a response that contains administrator data. If it does not have this role, you receive a response with a status of .
+admin403 Forbidden
+
+*****************************************
+Task Management
+new task 
+1. reqest method (POST
+)
+2. url test local 
+http://localhost:3000/tasks
+Body 
+3. body -> raw -> json 
+{
+  "title": "Task Title",
+  "description": "Task Description",
+  "user": { "id": 1 } // ???? ???????? ???? ???? ????? ?????? ??
+}
+
+update task 
+1. reqest method (PUT
+)
+2. url test local 
+http://localhost:3000/tasks/{taskId} 
+3. body -> raw -> json 
+{
+  "title": "Updated Task Title",
+  "description": "Updated Task Description"
+}
+- Mark tasks as completed
+1. reqest method (PUT
+)
+2. url test local 
+ http://localhost:3000/tasks/{taskId}/completed 
+delete task 
+1 DELETE
+2.http://localhost:3000/tasks/{taskId}
+
+- Filter tasks based on status (completed, pending)
+1. method request GET
+
+http://localhost:3000/tasks/status/{status}?page=1&limit=10
+

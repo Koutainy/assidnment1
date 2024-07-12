@@ -76,4 +76,8 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
+ 
+}
+ "scripts": {
+  "build": "tsc -p tsconfig.build.json"
 }
