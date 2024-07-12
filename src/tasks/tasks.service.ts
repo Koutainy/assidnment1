@@ -4,13 +4,14 @@ import { Repository } from 'typeorm';
 import { Task } from './task.entity';
 import { User } from '../users/user.entity';
 import { FindOneOptions } from 'typeorm';
-
-
+import { MongoRepository } from 'typeorm';
+import { EmailService } from '../mail/email.service';
 @Injectable()
 export class TasksService {
-  constructor(
+constructor(
     @InjectRepository(Task)
-    private tasksRepository: Repository<Task>,
+    private tasksRepository: MongoRepository<Task>,
+    private emailService: EmailService,
   ) {}
 
   findAll(page: number, limit: number): Promise<Task[]> {
@@ -26,6 +27,7 @@ export class TasksService {
   };
   return this.tasksRepository.findOne(options);
   }
+
 
   create(task: Partial<Task>, user: User): Promise<Task> {
     const newTask = this.tasksRepository.create({ ...task, user });
@@ -52,5 +54,31 @@ export class TasksService {
       skip: (page - 1) * limit,
       take: limit,
     });
+  }
+
+  async createTask(task: Task): Promise<Task> {
+    const newTask = await this.tasksRepository.save(task);
+    await this.emailService.sendEmail(
+      task.userId, // assuming userId is an email address for this example
+      'Task Assigned',
+      `A new task has been assigned to you: ${task.title}`,
+      `<p>A new task has been assigned to you: <strong>${task.title}</strong></p>`
+    );
+    return newTask;
+  }
+
+  async updateTaskStatus(id: string, status: string): Promise<Task> {
+    const task = await this.tasksRepository.findOneBy({ _id: id });
+    task.status = status;
+    await this.tasksRepository.save(task);
+    if (status === 'completed') {
+      await this.emailService.sendEmail(
+        task.userId, // assuming userId is an email address for this example
+        'Task Completed',
+        `The task "${task.title}" has been completed.`,
+        `<p>The task "<strong>${task.title}</strong>" has been completed.</p>`
+      );
+    }
+    return task;
   }
 }

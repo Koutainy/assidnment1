@@ -77,3 +77,21 @@ update profile users
  
  - View user-specific tasks   
 GET http://localhost:3000/users/:id/tasks
+
+*******************************
+**Email Notifications:* 
+- Send email notifications for tasks assigned  completed using a third-party 
+
+ 1.POST http://localhost:3000/tasks
+ 2. body 
+ {
+  "title": "New Task",
+  "description": "Description of the new task",
+  "userId": "user@example.com" // تأكد من أن userId هو عنوان البريد الإلكتروني للمستخدم
+}
+
+- completed using a third-party 
+1. http://localhost:3000/tasks/:id/status
+2. {
+  "status": "completed"
+}

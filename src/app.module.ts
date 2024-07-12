@@ -5,19 +5,22 @@ import { TasksModule } from './tasks/tasks.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { Task } from './tasks/task.entity';
+import { ConfigEnvironmentModule } from './config/config.module';
+import { EmailModule } from './mail/email.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: 'mongodb://localhost/nest',
+      url: process.env.DATABASE_URL,
       synchronize: true,
       useUnifiedTopology: true,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
-    AuthModule,
     TasksModule,
     UsersModule,
+    ConfigEnvironmentModule,
+    EmailModule,
   ],
 })
 export class AppModule {}
