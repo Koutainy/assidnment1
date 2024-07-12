@@ -5,13 +5,16 @@ import { Task } from '../tasks/task.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: ObjectID;
 
   @Column()
   username: string;
 
   @Column()
   password: string;
+
+   @Column()
+  email: string;
 
   @Column()
   roles: string;

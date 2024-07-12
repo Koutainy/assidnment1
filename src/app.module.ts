@@ -9,10 +9,11 @@ import { Task } from './tasks/task.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite', // أو نوع قاعدة البيانات التي تستخدمها
-      database: 'db.sqlite',
-      entities: [User, Task],
+      type: 'mongodb',
+      url: 'mongodb://localhost/nest',
       synchronize: true,
+      useUnifiedTopology: true,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
     AuthModule,
     TasksModule,

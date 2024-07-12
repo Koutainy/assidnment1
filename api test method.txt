@@ -65,3 +65,15 @@ delete task
 
 http://localhost:3000/tasks/status/{status}?page=1&limit=10
 
+********************************
+update profile users 
+ url :
+ http://localhost:3000/users/:id
+  json
+   {
+     "username": "newUsername",
+     "email": "newEmail@example.com"
+   }
+ 
+ - View user-specific tasks   
+GET http://localhost:3000/users/:id/tasks

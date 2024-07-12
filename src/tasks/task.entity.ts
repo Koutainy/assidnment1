@@ -5,7 +5,7 @@ import { User } from '../users/user.entity';
 @Entity()
 export class Task {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: ObjectID;
 
   @Column()
   title: string;
@@ -15,6 +15,9 @@ export class Task {
 
   @Column({ default: 'pending' })
   status: string;
+  
+ @Column()
+  userId: string; 
 
   @ManyToOne(() => User, (user) => user.tasks)
   user: User;

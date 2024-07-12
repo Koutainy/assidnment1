@@ -1,23 +1,29 @@
-
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
-
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // تعديل المسار
-import { RolesGuard } from '../roles/roles.guard'; // تعديل المسار
-import { Roles } from '../auth/roles.decorator'; // تعديل المسار
-
+import { Controller, Get, Param, Patch, Body, UseGuards } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { User } from './user.entity';
+import { Task } from '../tasks/task.entity';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
+import { Role } from '../auth/role.enum';
 
 @Controller('users')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
-  @Get('admin')
-  getAdminData() {
-    return 'Admin data';
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get(':id')
+  findOne(@Param('id') id: string): Promise<User> {
+    return this.usersService.findOne(id);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile() {
-    return 'User profile data';
+  @Patch(':id')
+  updateUser(@Param('id') id: string, @Body() updateUserDto: any): Promise<User> {
+    return this.usersService.updateUser(id, updateUserDto);
+  }
+
+  @Get(':id/tasks')
+  findUserTasks(@Param('id') id: string): Promise<Task[]> {
+    return this.usersService.findUserTasks(id);
   }
 }
